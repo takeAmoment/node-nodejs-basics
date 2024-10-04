@@ -7,7 +7,7 @@ const __dirname = dirname(__filename);
 
 const content = 'I am fresh and young';
 const successMessage = 'This file was created successfully';
-const errorMessage = 'This file already exists';
+const errorMessage = 'FS operation failed';
 
 const create = async () => {
     const filePath = join(__dirname, 'files', 'fresh.txt');
