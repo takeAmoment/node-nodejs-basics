@@ -7,7 +7,7 @@ export const checkIsExist = async (directory) => {
       await access(directory, constants.F_OK);
       return true;
   } catch (error) {
-      console.log('Error:', ERROR_MESSAGE, error);
+      console.log('Error:', ERROR_MESSAGE);
       return false;
   }
 }
