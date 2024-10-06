@@ -4,17 +4,14 @@ import { createGzip } from 'zlib';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 
-import { FILES_FOLDER_NAME, COMMON_ERROR_MESSAGE } from '../variables/common.js';
-
-const FILE_NAME = 'fileToCompress.txt';
-const ARCHIVE_FILE_NAME = 'fileToCompress.txt.gz'
+import { FILES_FOLDER_NAME, COMMON_ERROR_MESSAGE, FILE_TO_COMPRESS_NAME, ARCHIVED_FILE_NAME } from '../variables/common.js';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirname = dirname(__fileName);
 
 const compress = async () => {
-    const fileName = join(__dirname, FILES_FOLDER_NAME, FILE_NAME);
-    const archivedFile = join(__dirname, FILES_FOLDER_NAME, ARCHIVE_FILE_NAME);
+    const fileName = join(__dirname, FILES_FOLDER_NAME, FILE_TO_COMPRESS_NAME);
+    const archivedFile = join(__dirname, FILES_FOLDER_NAME, ARCHIVED_FILE_NAME);
 
     const readableStream = createReadStream(fileName);
     const writableStream = createWriteStream(archivedFile);
