@@ -3,7 +3,7 @@ import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { createHash } from 'crypto'
 
-import { FILES_FOLDER_NAME } from '../variables/common.js'
+import { FILES_FOLDER_NAME, COMMON_ERROR_MESSAGE } from '../variables/common.js'
 
 const FILE_NAME = 'fileToCalculateHashFor.txt'
 
@@ -17,7 +17,7 @@ const calculateHash = async () => {
   const readableStream = createReadStream(fileName);
 
   readableStream.on('error', () => {
-    throw new Error(ERROR_MESSAGE);
+    throw new Error(COMMON_ERROR_MESSAGE);
   });
   readableStream.on('data', (data) => hash.update(data));
   readableStream.on('end', () => console.log('Hash is', hash.digest('hex')));

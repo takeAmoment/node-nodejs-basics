@@ -1,15 +1,7 @@
 import { pipeline, Transform } from 'stream'
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { stdout, stdin } from 'process';
 
-import { FILES_FOLDER_NAME, COMMON_ERROR_MESSAGE } from '../variables/common.js';
-
-const FILE_TO_READ_NAME = 'fileToRead.txt';
-const FILE_TO_WRITE_NAME = 'fileToWrite.txt';
-
-const __fileName = fileURLToPath(import.meta.url);
-const __dirname = dirname(__fileName);
+import { COMMON_ERROR_MESSAGE } from '../variables/common.js';
 
 class ReverseDataTransform extends Transform {
     _transform(data, encoding, callback) {
@@ -24,7 +16,7 @@ const transform = async () => {
 
     pipeline(stdin, transformedData, stdout, (error) => {
         if(error) {
-            console.log('Error:', COMMON_ERROR_MESSAGE);
+            throw new Error(COMMON_ERROR_MESSAGE)
         }
     })
 };
