@@ -13,14 +13,14 @@ const list = async () => {
     const isFolderExist = await checkIsExist(folderPath);
 
     if(!isFolderExist){
-        return;
+        throw new Error(ERROR_MESSAGE);
     }
 
     try {
        const files = await readdir(folderPath);
        console.log('Files array:', files);
     } catch (error) {
-        console.log('Error:', ERROR_MESSAGE);
+        throw new Error(ERROR_MESSAGE);
     }
 };
 

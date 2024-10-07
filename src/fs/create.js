@@ -1,28 +1,28 @@
-import { access, constants, writeFile } from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 import { ERROR_MESSAGE, FILES_FOLDER_NAME } from '../variables/common.js';
+import { checkIsExist } from '../helpers/checkIsExist.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 const content = 'I am fresh and young';
-const successMessage = 'This file was created successfully';
+const FILE_NAME = 'fresh.txt';
 
 const create = async () => {
-    const filePath = join(__dirname, FILES_FOLDER_NAME, 'fresh.txt');
-    
-    try {
-        await access(filePath, constants.F_OK);
+    const filePath = join(__dirname, FILES_FOLDER_NAME, FILE_NAME);
+
+    const isFileExist = await checkIsExist(filePath);
+
+    if(isFileExist) {
         throw new Error(ERROR_MESSAGE);
+    }
+
+    try {
+        await writeFile(filePath, content);
     } catch (err) {
-        if (err.code === 'ENOENT') {
-            await writeFile(filePath, content);
-            console.log(successMessage);
-        } else {
-            console.log('Error:', ERROR_MESSAGE);
-        }
+        throw new Error(ERROR_MESSAGE);
     }
 };
 

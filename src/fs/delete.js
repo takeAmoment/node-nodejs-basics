@@ -16,13 +16,13 @@ const remove = async () => {
   const isFileExist = await checkIsExist(filePath);
 
   if(!isFileExist) {
-    return;
+    throw new Error(ERROR_MESSAGE);
   }
 
   try {
     await rm(filePath);
   } catch (error) {
-    console.log('Error:', ERROR_MESSAGE);
+    throw new Error(ERROR_MESSAGE);
   }
 };
 

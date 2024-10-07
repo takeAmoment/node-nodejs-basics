@@ -2,7 +2,7 @@ import { mkdir, cp } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-import { checkIsExist } from '../helpers/checkIsNotExist.js';
+import { checkIsExist } from '../helpers/checkIsExist.js';
 import { ERROR_MESSAGE, FILES_FOLDER_NAME } from '../variables/common.js';
 
 const __fileName = fileURLToPath(import.meta.url);
@@ -16,15 +16,14 @@ const copy = async () => {
     const isSourceFolderExist = await checkIsExist(filesFolder);
 
     if(!isSourceFolderExist) {
-        return;
+        throw new Error(ERROR_MESSAGE);
     }
 
     try {
         await mkdir(copyFilesFolder);
         await cp(filesFolder, copyFilesFolder, { recursive: true });
     } catch (error) {
-        console.log('Error:', ERROR_MESSAGE);
-        return;
+        throw new Error(ERROR_MESSAGE);
     }
 };
 

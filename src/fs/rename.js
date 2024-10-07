@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-import { checkIsNotExist } from '../helpers/checkIsNotExist.js';
+import { checkIsExist } from '../helpers/checkIsExist.js';
 import { ERROR_MESSAGE } from '../variables/common.js';
 
 const WRONG_FILE_NAME = 'wrongFilename.txt';
@@ -15,16 +15,16 @@ const rename = async () => {
     const wrongFilePath = join(__dirname, 'files', WRONG_FILE_NAME);
     const properFilePath = join(__dirname, 'files', PROPER_FILE_NAME);
 
-    const isFileNotExist = await checkIsNotExist(properFilePath);
+    const isFileExist = await checkIsExist(properFilePath);
 
-    if(!isFileNotExist) {
-        return;
+    if(isFileExist) {
+        throw new Error(ERROR_MESSAGE);
     }
 
     try {
       await fs.rename(wrongFilePath, properFilePath);
     } catch (error) {
-        console.log('Error:', ERROR_MESSAGE);
+      throw new Error(ERROR_MESSAGE);
     }
 };
 
